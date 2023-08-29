@@ -4,9 +4,6 @@
 Esse documento exibe as descrições das questões e a relação dos datasets que devem ser utiizados 
 pelos alunos e alunas.
 
-O modelo de documento seguinte mostra como você deve registrar por escrito o desenvolvimento. 
-https://docs.google.com/document/d/1hIwPx9W-k3LnXRJrkWYTsbrtx4NfP88_/edit?usp=sharing&ouid=118351454454462119994&rtpof=true&sd=true
-
 ##  Aluno - Dataset
 
 LARISSA VITORIA VASCONCELOS SOUSA: https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset
