@@ -1,23 +1,66 @@
-# Importe as bibliotecas necessárias.
-from questao1 import avc_ajustado
-from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
+'''Utilizando o atributo mais relevante calculado na questão 1, implemente uma regressão linear
+utilizando somente este atributo mais relevante, para predição do atributo alvo determinado na questão
+1 também. Mostre o gráfico da reta de regressão em conjunto com a nuvem de atributo. Determine também
+os valores: RSS, MSE, RMSE e R_squared para esta regressão baseada somente no atributo mais relevante.
+Obs: Registrar na seção de resultados a análise realizada e discutir sobre os resultados encontrados.'''
 
-# Carregue o dataset. Se houver o dataset atualizado, carregue o atualizado.
-avc_ajustado = avc_ajustado
+# Importando as bibliotecas necessárias
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+import numpy as np
 
-# Sem normalizar o conjunto de dados divida o dataset em treino e teste.
-X = avc_ajustado.drop('stroke', axis=1)
-y = avc_ajustado['stroke']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=1, stratify=y)
 
-# Implemente o Knn exbindo sua acurácia nos dados de teste e mantenha sua parametrização default.
-knn = KNeighborsClassifier()
-# Aplicando a função fit do knn
-knn.fit(X_train, y_train)
-y_pred = knn.predict(X_test)
-acuracia = accuracy_score(y_test, y_pred)
-# Mostrando o acerto do algoritmo
-print('\nAcurácia antes da normalização:', knn.score(X_test, y_test))
-print('ou {:.2f}%'.format(acuracia * 100))
+car_price = pd.read_csv("car_price_atualizado.csv")
+pd.set_option('display.max_columns', None)
+
+
+X = car_price["make_ed"].values.reshape(-1, 1) # marca
+y = car_price["price"].values # preço
+
+# Criando o modelo
+reg = LinearRegression()
+
+# Ajustar o modelo aos dados
+reg.fit(X, y)
+
+# Fazendo previsões
+previsoes = reg.predict(X)
+
+print("\nPrevisões da Regressão Linear:")
+print(previsoes[:5])
+
+# Criando o gráfico
+plt.scatter(X, y, color="pink")
+plt.plot(X, previsoes, color="black")
+plt.xlabel("Marca")
+plt.ylabel("Preço")
+plt.show()
+
+
+def compute_RSS(previsoes,y):
+    RSS = np.sum(np.square(y - previsoes))
+    return RSS
+
+def compute_MSE(previsoes,y):
+    MSE= np.sum(np.square(y-previsoes))/len(previsoes)
+    return MSE
+
+def compute_RMSE(previsoes,y):
+    MSE = compute_MSE(previsoes, y)
+    RMSE = np.sqrt(MSE)
+    return RMSE
+
+def compute_R_squared(previsoes,y):
+    var_pred = np.sum(np.square(previsoes - np.mean(y)))
+    var_data = np.sum(np.square(y-np.mean(y)))
+    r_squared = np.divide(var_pred, var_data)
+    return r_squared
+
+print("\nRSS: {}".format(compute_RSS(previsoes,y)))
+print("\nMSE: {}".format(compute_MSE(previsoes,y)))
+print("\nRMSE: {}".format(compute_RMSE(previsoes,y)))
+print("\nR^2: {}".format(compute_R_squared(previsoes,y)))
+
+
+

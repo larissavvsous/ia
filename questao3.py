@@ -1,33 +1,52 @@
-# Importe as bibliotecas necessárias.
-from questao1 import avc_ajustado
+'''Remova os atributos que não são relevantes para o processo de regressão e realize um gridsearch
+ cross-validation para verificar qual a melhor parametrização para os regressores de Lasso e Ridge.
+ Print as melhores configurações de cada um mostre também os melhores scores. Obs: Registrar na seção
+ de resultados a análise realizada e discutir sobre os resultados encontrados.
+'''
+
+# Importando as bibliotecas necessárias
+from sklearn.linear_model import Lasso, Ridge
 from sklearn.model_selection import train_test_split
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import normalize, StandardScaler
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import KFold
+import numpy as np
+from questao2 import car_price
 
-# Carregue o dataset. Se houver o dataset atualizado, carregue o atualizado.
-avc_ajustado = avc_ajustado
+car_price = car_price
+print(car_price)
+X = car_price.drop("price", axis=1).values # todas encoder, exceto o atributo alvo "price"
+y = car_price["price"].values # preço
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# Normalize o conjunto de dados com normalização logarítmica e verifique a acurácia do knn.
-X = avc_ajustado.drop('stroke', axis=1)
-y = avc_ajustado['stroke']
-X_normalizado_log = normalize(X, norm='l2')
-X_train_log, X_test_log, y_train_log, y_test_log = train_test_split(X_normalizado_log, y, test_size=0.3, random_state=1, stratify=y)
-knn = KNeighborsClassifier()
-# Aplicando a função fit do knn
-knn.fit(X_train_log, y_train_log)
-y_pred_log = knn.predict(X_test_log)
-acuracia_log = accuracy_score(y_test_log, y_pred_log)
 
-# Normalize o conjunto de dados com normalização de média zero e variância unitária e verifique a acurácia do knn.
-scaler = StandardScaler()
-X_normalizado_scaler = scaler.fit_transform(X)
-X_train_scaler, X_test_scaler, y_train_scaler, y_test_scaler = train_test_split(X_normalizado_scaler, y, test_size=0.3, random_state=1, stratify=y)
+# Inicializando o Lasso
+lasso = Lasso()
 
-knn.fit(X_train_scaler, y_train_scaler)
-y_pred_scaler = knn.predict(X_test_scaler)
-acuracia_scaler = accuracy_score(y_test_scaler, y_pred_scaler)
+# Inicializando o KFold
+kf = KFold(n_splits=6, shuffle=True, random_state=42)
 
-# Print as duas acuracias lado a lado para comparar.
-print('Acurácia com normalização logarítmica: {:.2f}%'.format(acuracia_log * 100))
-print('Acurácia com normalização de média zero e variância unitária (scaler): {:.2f}%'.format(acuracia_scaler * 100))
+# Configurando os parâmetros
+param_grid = {"alpha": np.arange(0.00001, 1, 20)}
+
+# Instanciando lasso_cv
+lasso_cv = GridSearchCV(lasso, param_grid, cv = kf)
+
+# Ajustar aos dados de treinamento
+lasso_cv.fit(X_train, y_train)
+
+print("Parâmetros de Lasso ajustados: {}".format(lasso_cv.best_params_))
+print("Pontuação de Lasso afinado: {}".format(lasso_cv.best_score_))
+
+
+# Inicializando o Ridge
+
+param_grid_2 = {"alpha": np.arange(0.00001, 1, 20),
+              "solver":["sag","lsqr"]}
+
+# Instanciando Ridge
+ridge = Ridge()
+ridge_cv = GridSearchCV(ridge, param_grid_2, cv=kf)
+ridge_cv.fit(X_train,y_train)
+
+print("Parâmetros de Ridge ajustados: {}".format(ridge_cv.best_params_))
+print("Pontuação de Ridge afinado: {}".format(ridge_cv.best_score_))

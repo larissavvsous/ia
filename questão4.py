@@ -1,46 +1,35 @@
-# Importe as bibliotecas necessárias.
-from questao1 import avc_ajustado
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
+'''Utilizando kfold e cross-validation faça uma regressão linear utilizando os mesmos atributos
+definidos na questão 3. Obs: Com os resultados obtidos na questão 3 e da questão 4 faça uma
+comparação entre os desempenhos. Escolha o regressor adequado e informe o motivo da escolha.
+Discuta sobre as limitações e acertos encontrados.'''
+
+# Importando as bibliotecas necessárias
+from sklearn.linear_model import LinearRegression
 import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import cross_val_score, KFold
+from questao2 import car_price
 
-# Carregue o dataset. Se houver o dataset atualizado, carregue o atualizado.
-avc_ajustado = avc_ajustado
+car_price = car_price
+print(car_price)
 
-# Normalize com a melhor normalização o conjunto de dados se houver melhoria.
-X = avc_ajustado.drop('stroke', axis=1)
-y = avc_ajustado['stroke']
-scaler = StandardScaler()
-knn = KNeighborsClassifier()
-X_normalizado_scaler = scaler.fit_transform(X)
-X_train_scaler, X_test_scaler, y_train_scaler, y_test_scaler = train_test_split(X_normalizado_scaler, y, test_size=0.3, random_state=1, stratify=y)
+# Criar X e y
+X = car_price.drop("price", axis=1).values # todas encoder, exceto o atributo alvo "price"
+y = car_price["price"].values # preço
 
-knn.fit(X_train_scaler, y_train_scaler)
-y_pred_scaler = knn.predict(X_test_scaler)
-acuracia_scaler = accuracy_score(y_test_scaler, y_pred_scaler)
-print('Acurácia com a melhor normalização: a scaler.\nResultado: {:.2f}%'.format(acuracia_scaler * 100))
 
-# Plote o gráfico com o a indicação do melhor k.
-neighbors = np.arange(2, 18)
-train_accuracies = {}
-test_accuracies = {}
+# Criar um objeto do KFold
+kf = KFold(n_splits=6, shuffle=True, random_state=5)
 
-for neighbor in neighbors:
-    knn = KNeighborsClassifier(n_neighbors=neighbor)
-    knn.fit(X_train_scaler, y_train_scaler)
+reg = LinearRegression()
 
-    train_accuracies[neighbor] = knn.score(X_train_scaler, y_train_scaler)
-    test_accuracies[neighbor] = knn.score(X_test_scaler, y_test_scaler)
+# Calcular pontuações de validação cruzada 6 vezes
+cv_scores = cross_val_score(reg, X, y, cv=kf)
 
-print("\nAcurácia dos dados de treino: ",train_accuracies)
-print("\nAcurácia dos dados de teste: ", test_accuracies)
-plt.title("Testando o melhor K:")
-plt.plot(neighbors, train_accuracies.values(), label="Acurácia de treino")
-plt.plot(neighbors, test_accuracies.values(), label="Acurácia de teste")
-plt.legend()
-plt.show()
-print("\nMelhor K: igual ou maior a 8")
+# Print cv_scores
+print("Score validação cruzada: ", cv_scores)
 
+# Print da média
+print("Média: ", np.mean(cv_scores)) # média das pontuações
+
+# Print do desvio padrão
+print("Desvio padrão: ", np.std(cv_scores))
