@@ -4,48 +4,10 @@
 Esse documento exibe as descrições das questões e a relação dos datasets que devem ser utiizados 
 pelos alunos e alunas.
 
-O modelo de documento seguinte mostra como você deve registrar por escrito o desenvolvimento. 
-https://docs.google.com/document/d/1hIwPx9W-k3LnXRJrkWYTsbrtx4NfP88_/edit?usp=sharing&ouid=118351454454462119994&rtpof=true&sd=true
 
 ##  Aluno - Dataset
 
-ANA LIVIA SOUSA DAVI TAVEIRA :https://www.kaggle.com/datasets/uciml/mushroom-classification
-
-CARLOS EDUARDO TELES ALENCAR: https://www.kaggle.com/datasets/uciml/glass
-
-DAVI GONCALVES RAMOS DE MESQUITA:https://www.kaggle.com/datasets/andrewmvd/fetal-health-classification
-
-EMILY CAMELO MENDONCA: https://www.kaggle.com/datasets/christianlillelund/csgo-round-winner-classification
-
-ERICK RAMOS COUTINHO: https://www.kaggle.com/datasets/olcaybolat1/dermatology-dataset-classification
-
-ERYKA CARVALHO DA SILVA: https://www.kaggle.com/datasets/gyejr95/league-of-legends-challenger-ranked-games2020
-
-GIOVANNA DIAS CASTRO DE OLIVEIRA: https://www.kaggle.com/datasets/sadmansakib7/ecg-arrhythmia-classification-dataset
-
 LARISSA VITORIA VASCONCELOS SOUSA: https://www.kaggle.com/datasets/shebrahimi/financial-distress
-
-LUCIANA SOUSA MARTINS: https://www.kaggle.com/datasets/kevinarvai/clinvar-conflicting
-
-LUIS SAVIO GOMES ROSA: https://www.kaggle.com/datasets/sudhanshu2198/oil-spill-detection
-
-MARIA BIANCA SOUSA COSTA: https://www.kaggle.com/datasets/robikscube/eye-state-classification-eeg-dataset?select=EEG_Eye_State_Classification.csv
-
-MAVERICK ALEKYNE DE SOUSA RIBEIRO: https://www.kaggle.com/datasets/gauravduttakiit/dry-bean-classification
-
-PAULO HENRIQUE SANTOS MARQUES: https://www.kaggle.com/datasets/yasserh/breast-cancer-dataset
-
-RUAN RODRIGUES SOUSA: https://www.kaggle.com/datasets/shayanfazeli/heartbeat
-
-SHELDA DE SOUZA RAMOS: https://www.kaggle.com/datasets/kukuroo3/body-signal-of-smoking
-
-THAIS ANDRADE CASTRO: https://www.kaggle.com/datasets/abrahamanderson/cancer-classification
-
-VICTOR MATHEUS ARAUJO OLIVEIRA: https://www.kaggle.com/datasets/deepcontractor/smoke-detection-dataset
-
-WILLIAN KELVIN BORGES DA COSTA: https://www.kaggle.com/datasets/subhajournal/trojan-detection
-
-
 
 
 ### Questão 1
@@ -90,8 +52,3 @@ entre classicadores para que você também possa descobrir qual classificador ma
 desempenho e faça uma comparação entre estes.
 Conclua o relatótório  com auxílio de um fluxogragrama mostrando qual a metodologia completa para classificação dos dados do seu dataset.
 
-
-### Observações para o Relatório
-
-Discutir **organizadamente** na sessão de resultados os números obtidos de cada questão.
-Ao concluir o relatório, compartilhar com **alysonbnr@ufc.br**
